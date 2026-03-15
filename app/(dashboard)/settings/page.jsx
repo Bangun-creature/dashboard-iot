@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import SecurityLogs from './SecurityLogs';
-import ThresholdAlert from './ThresholdAlert';
+// import SecurityLogs from './SecurityLogs';
+// import ThresholdAlert from './ThresholdAlert';
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState('general');

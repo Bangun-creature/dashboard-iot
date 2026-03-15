@@ -17,8 +17,8 @@ export default function History() {
     try {
       const rawData = await axios.get(`http://localhost:3000/api/history/graph`);
 
-      console.log(`Ini data history graph: ${JSON.stringify(rawData.data.payload.datas)}`);
-      setListDataMeterGauge(rawData.data.payload.datas);
+      console.log(`Ini data history graph: ${JSON.stringify(rawData.data.payload)}`);
+      setListDataMeterGauge(rawData.data.payload);
     } catch (error) {
       console.log(`There is an error get history graph: ${error}`);
     }
@@ -33,7 +33,7 @@ export default function History() {
     try {
       const rawData = await axios.get(`http://localhost:3000/api/history/rfid`);
       console.log(`Ini data dari tabel rfid: ${JSON.stringify(rawData.data)}`);
-      setListRfid(rawData.data.payload.datas);
+      setListRfid(rawData.data.payload);
     } catch (error) {
       console.log(`There is an error : ${error}`);
     }
@@ -48,7 +48,7 @@ export default function History() {
     try {
       const rawData = await axios.get(`http://localhost:3000/api/history/buttons`)
       console.log(`Ini data history button: ${JSON.stringify(rawData.data)}`);
-      setListButton(rawData.data.payload.datas)
+      setListButton(rawData.data.payload)
     } catch (error) {
       console.log(`There is an error history buttons: ${error}`);
     }

@@ -5,10 +5,11 @@ import GaugeComponent from 'react-gauge-component';
 import axios from 'axios';
 import ConfigurationMeterGauge from '@/components/ConfigurationMeterGauge';
 import mqtt from 'mqtt';
+import {useGauges} from "@/lib/GaugeContext"
 
-export default function Monitoring({gauges, setGauges}) {
+export default function Monitoring() {
   // State untuk daftar sensor (Gauge) ada di atas (APP)
- 
+  const {gauges, setGauges} = useGauges();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -96,8 +97,8 @@ export default function Monitoring({gauges, setGauges}) {
       const rawData = await axios.get(`http://localhost:3000/api/metergauge`);
 
       console.log(`Ini meter gauge kita: ${JSON.stringify(rawData.data)}`);
-      if(rawData.data.payload.datas.length > 0){
-        setGauges(rawData.data.payload.datas);
+      if(rawData.data.payload.length > 0){
+        setGauges(rawData.data.payload);
       } else {
         setGauges([])
       }

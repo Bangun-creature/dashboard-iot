@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ModalRegisterCard from '../../components/ModalRegisterCard';
+import ModalRegisterCard from '@/components/ModalRegisterCard';
 import axios from 'axios';
-import ConfigurationRfid from '../../components/ConfigurationRfid';
+import ConfigurationRfid from '@/components/ConfigurationRfid';
 import mqtt from 'mqtt';
 
 export default function AccessControl() {
@@ -40,7 +40,7 @@ export default function AccessControl() {
     try {
       const rawData = await axios.get(`http://localhost:3000/api/rfid`);
       console.log(`Ini data dari tabel rfid: ${JSON.stringify(rawData.data)}`);
-      setListRfid(rawData.data.payload.datas);
+      setListRfid(rawData.data.payload);
     } catch (error) {
       console.log(`There is an error : ${error}`);
     }
