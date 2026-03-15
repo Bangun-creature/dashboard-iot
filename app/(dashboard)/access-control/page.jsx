@@ -5,6 +5,7 @@ import ModalRegisterCard from '@/components/ModalRegisterCard';
 import axios from 'axios';
 import ConfigurationRfid from '@/components/ConfigurationRfid';
 import mqtt from 'mqtt';
+import formatTimestamp from '@/lib/formatTime';
 
 export default function AccessControl() {
   // Data user terakhir yang melakukan TAP (Real-time Simulation)
@@ -129,7 +130,7 @@ export default function AccessControl() {
             
             <div className="mt-6 text-center">
               <p className="text-slate-200 text-2xl font-semibold">{listRfid[listRfid.length-1].username}</p>
-              <p className="text-slate-500 text-sm mt-1">{listRfid[listRfid.length-1].updated_at}</p>
+              <p className="text-slate-500 text-sm mt-1">{formatTimestamp(listRfid[listRfid.length-1].updated_at)}</p>
             </div>
           </div>
 
@@ -166,7 +167,7 @@ export default function AccessControl() {
                 {listRfid.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-700/30 transition-colors">
                     <td className="px-4 py-4 font-mono text-xs flex gap-4">
-                      <p>{log.updated_at}</p>
+                      <p>{formatTimestamp(log.updated_at)}</p>
                       <button onClick={()=>{handleConfigurationOpen(log.id)}} className='text-slate-100 text-xs font-medium font-notosans bg-emerald-600 rounded-lg w-fit px-2 py-1'>Configuration</button>
                     </td>
                     <td className="px-6 py-4">

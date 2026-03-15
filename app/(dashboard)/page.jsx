@@ -96,11 +96,11 @@ export default function Home() {
   {/* Card 1: Power Status (Dari Meter Gauge) */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Meter Gauge</p>
-    <h2 className="text-3xl font-semibold text-white mt-2">Meter Gauge <span className="text-sm text-slate-400">List</span></h2>
+    <h2 className="text-3xl font-semibold text-white mt-2 font-robotoflex">Meter Gauge <span className="text-sm text-slate-400">List</span></h2>
     <div className="mt-2 text-xs text-white/70">
       <ul>
         {gauges.map((item, index)=>(
-          <li key={index}>{index + 1}. {item.name}</li>
+          <li key={index} className="font-notosans">{index + 1}. {item.name}</li>
         ))}
       </ul>
     </div>
@@ -109,11 +109,11 @@ export default function Home() {
   {/* Card 2: Security Status (Dari RFID) */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">RFID Card</p>
-    <h2 className="text-3xl font-semibold text-white mt-2">14 <span className="text-sm text-slate-400">Total Card</span></h2>
+    <h2 className="text-3xl font-semibold text-white mt-2 font-robotoflex">14 <span className="text-sm text-slate-400">Total Card</span></h2>
     <div className="mt-2 text-xs text-white/70">
       <ul>
-        <li>Total Granted: {totalGranted}</li>
-        <li>Total Nonactive: {totalFalse}</li>
+        <li className="font-notosans">Total Granted: {totalGranted}</li>
+        <li className="font-notosans">Total Nonactive: {totalFalse}</li>
       </ul>
     </div>
   </div>
@@ -121,11 +121,11 @@ export default function Home() {
   {/* Card 3: Active Switches (Dari Buttons) */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Active Devices</p>
-    <h2 className="text-3xl font-semibold text-white mt-2">{buttons.filter((item)=> item.status == 1).length} <span className="text-sm text-slate-400">/ {buttons.length}</span></h2>
+    <h2 className="text-3xl font-semibold text-white mt-2 font-robotoflex">{buttons.filter((item)=> item.status == 1).length} <span className="text-sm text-slate-400">/ {buttons.length}</span></h2>
     <div className="mt-2 text-xs text-slate-500">
       <ul className="grid grid-cols-4 lg:grid-cols-2 gap-2">
         {buttons.map((item, index)=>(
-        <li key={index} className={`${item.status == 1 ? 'bg-emerald-600' : 'bg-red-600' } p-2 rounded-lg flex items-center justify-between`}><p className="m-auto text-white font-medium text-sm">id: {item.id}</p></li>
+        <li key={index} className={`${item.status == 1 ? 'bg-emerald-600' : 'bg-red-600' } p-2 rounded-lg flex items-center justify-between font-notosans`}><p className="m-auto text-white font-medium text-sm">id: {item.id}</p></li>
         ))}
       </ul>
     </div>
@@ -134,8 +134,8 @@ export default function Home() {
   {/* Card 4: System Health */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">MQTT Broker</p>
-    <h2 className={`text-3xl font-semibold ${isMqttOnline? 'text-green-500' : 'text-red-500'} mt-2`}>{isMqttOnline ? 'Online' : 'Offline'}</h2>
-    <div className="mt-2 text-xs text-slate-500">broker.emqx.io</div>
+    <h2 className={`text-3xl font-semibold  font-robotoflex ${isMqttOnline? 'text-green-500' : 'text-red-500'} mt-2`}>{isMqttOnline ? 'Online' : 'Offline'}</h2>
+    <div className="mt-2 text-xs text-slate-500 font-notosans">broker.emqx.io</div>
   </div>
 </div>
     </div>

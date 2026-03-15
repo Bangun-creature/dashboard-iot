@@ -74,7 +74,7 @@ export default function Navbar(){
                   <Link
                     href={item.link}
                     onClick={() => setIsOpenNavbar(false)} // Tutup menu saat diklik (mode mobile)
-                    className={`flex px-6 py-4 border-b border-slate-600/50 transition-all font-robotoflex text-sm 
+                    className={`flex px-6 py-4 border-b border-slate-600/50 transition-all font-notosans text-xs 
                     ${pathname === item.link ? "bg-slate-800 text-blue-400 border-l-4 border-l-blue-500" : "text-slate-200 hover:bg-slate-600 hover:pl-8"}`}
                   >
                     {item.text}

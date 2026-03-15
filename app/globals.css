@@ -5,6 +5,13 @@
   --foreground: #171717;
 }
 
+@theme {
+  --font-robotoflex: "Roboto Flex", sans-serif;
+  --font-notosans: "Noto Sans", sans-serif;
+  --font-zalandosans: "Zalando Sans", sans-serif;
+  /* --bg-me: url("./aku-nobg.png"); */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

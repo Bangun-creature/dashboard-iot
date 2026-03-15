@@ -3,6 +3,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import formatTimestamp from '@/lib/formatTime';
 
 export default function History() {
   const [activeTab, setActiveTab] = useState('sensor'); // 'sensor', 'rfid', atau 'button'
@@ -123,7 +124,7 @@ export default function History() {
               <tbody className="divide-y divide-slate-700/50 text-slate-300">
                 {listRfid.map((item, index) => (
                   <tr key={index} className="hover:bg-slate-700/30 transition-all">
-                    <td className="px-8 py-5 font-mono text-xs text-slate-500">{item.updated_at}</td>
+                    <td className="px-8 py-5 font-mono text-xs text-slate-500">{formatTimestamp(item.updated_at)}</td>
                     <td className="px-8 py-5 font-semibold text-slate-200">{item.username}<span className="block text-[10px] font-mono text-slate-500">{item.rfid_code}</span></td>
                     <td className="px-8 py-5"><span className={`${item.status == "true" ? "bg-slate-100 text-green-500" : "bg-slate-100 text-red-500"} px-3 py-1 rounded-full text-[10px] font-bold`}>{item.status == "true" ? "GRANTED" : "FALSE"}</span></td>
                   </tr>
@@ -147,7 +148,7 @@ export default function History() {
                     <p className="text-slate-500 text-[10px] uppercase">Action: {item.status === 1 ? 'Turned ON' : 'Turned OFF'}</p>
                   </div>
                 </div>
-                <p className="text-slate-600 font-mono text-[10px]">{item.updated_at}</p>
+                <p className="text-slate-600 font-mono text-[10px]">{formatTimestamp(item.updated_at)}</p>
               </div>
             ))}
           </div>
