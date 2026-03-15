@@ -1,3 +1,11 @@
+'use client';
+import { useState } from "react";
+import { useEffect } from "react";
+import ConfigurationButton from "@/components/ConfigurationButton";
+import ModalAddButton from "@/components/ModalAddButton";
+import mqtt from "mqtt";
+import axios from "axios";
+
 export default function DeviceControl() {
   const [switches, setSwitches] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +35,8 @@ export default function DeviceControl() {
   const loadedDataButton = async () => {
     try {
       const rawData = await axios.get('http://localhost:3000/api/buttons');
-      setSwitches(rawData.data.payload.datas);
+      console.log(`Rawdata button: ${JSON.stringify(rawData)}`)
+      setSwitches(rawData.data.payload);
     } catch (error) {
       console.log(`Error loading buttons: ${error}`);
     }
