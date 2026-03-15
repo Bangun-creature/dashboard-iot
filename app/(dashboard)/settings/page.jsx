@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import SecurityLogs from '@/components/SecurityLogs';
 // import SecurityLogs from './SecurityLogs';
 // import ThresholdAlert from './ThresholdAlert';
 
@@ -20,7 +21,7 @@ export default function Settings() {
         {/* Sidebar Navigation */}
         <div className="lg:col-span-1">
           <div className="bg-slate-800 p-2 rounded-2xl border border-slate-700 sticky top-24">
-            {['general', 'threshold', 'security'].map((tab) => (
+            {['general', 'security'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -52,8 +53,6 @@ export default function Settings() {
               </div>
             </div>
           )}
-
-          {activeTab === 'threshold' && <ThresholdAlert />}
           {activeTab === 'security' && <SecurityLogs />}
 
           {/* Action Footer */}

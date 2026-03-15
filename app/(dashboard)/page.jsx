@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { connectMQTT, disconnectMQTT } from "@/lib/mqtt-worker";
 
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
   const [listRfid, setListRfid] = useState([]);
   const [totalGranted, setTotalGranted] = useState();
   const [totalFalse, setTotalFalse] = useState();
+  const [isMqttOnline, setIsMqttOnline] = useState(false);
 
   const [buttons, setButtons] = useState([]);
 
@@ -60,6 +62,13 @@ export default function Home() {
     loadedMeterGauge();
     handleLoadListRfid();
     loadedDataButton();
+
+    const client = connectMQTT(
+        null,
+        (status)=>{
+            setIsMqttOnline(status);
+        }
+    )
   },[])
 
   return (
@@ -91,7 +100,7 @@ export default function Home() {
     <div className="mt-2 text-xs text-white/70">
       <ul>
         {gauges.map((item, index)=>(
-          <li>{index + 1}. {item.name}</li>
+          <li key={index}>{index + 1}. {item.name}</li>
         ))}
       </ul>
     </div>
@@ -116,7 +125,7 @@ export default function Home() {
     <div className="mt-2 text-xs text-slate-500">
       <ul className="grid grid-cols-4 lg:grid-cols-2 gap-2">
         {buttons.map((item, index)=>(
-        <li className={`${item.status == 1 ? 'bg-emerald-600' : 'bg-red-600' } p-2 rounded-lg flex items-center justify-between`}><p className="m-auto text-white font-medium text-sm">id: {item.id}</p></li>
+        <li key={index} className={`${item.status == 1 ? 'bg-emerald-600' : 'bg-red-600' } p-2 rounded-lg flex items-center justify-between`}><p className="m-auto text-white font-medium text-sm">id: {item.id}</p></li>
         ))}
       </ul>
     </div>
@@ -125,7 +134,7 @@ export default function Home() {
   {/* Card 4: System Health */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">MQTT Broker</p>
-    <h2 className="text-3xl font-semibold text-green-500 mt-2">Online</h2>
+    <h2 className={`text-3xl font-semibold ${isMqttOnline? 'text-green-500' : 'text-red-500'} mt-2`}>{isMqttOnline ? 'Online' : 'Offline'}</h2>
     <div className="mt-2 text-xs text-slate-500">broker.emqx.io</div>
   </div>
 </div>
