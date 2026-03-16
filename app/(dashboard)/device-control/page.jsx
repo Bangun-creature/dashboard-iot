@@ -136,7 +136,7 @@ export default function DeviceControl() {
           className={`px-6 py-3 rounded-lg font-bold transition-all flex items-center gap-2
             ${switches.length >= 8 ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20'}`}
         >
-          <span className="text-xl">+</span> Add Switch
+          <span className="text-xl font-notosans">+</span> Add Switch
         </button>
       </div>
 
@@ -145,16 +145,16 @@ export default function DeviceControl() {
           <div key={sw.id} className="bg-slate-800 border border-slate-700 p-5 rounded-2xl flex flex-col gap-4 shadow-xl">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-slate-200 font-semibold">{sw.name}</h3>
-                <p className="text-xs text-slate-500 font-mono uppercase tracking-tighter">Pin: {sw.pin_number}</p>
+                <h3 className="text-slate-200 font-semibold font-robotoflex">{sw.name}</h3>
+                <p className="text-xs text-slate-500 uppercase tracking-tighter font-notosans">Pin: {sw.pin_number}</p>
               </div>
-              <button onClick={() => removeSwitch(sw.id)} className="text-slate-600 hover:text-red-400 text-xs transition-colors">
+              <button onClick={() => removeSwitch(sw.id)} className="text-slate-600 hover:text-red-400 text-xs transition-colors font-notosans">
                 Remove
               </button>
             </div>
 
             <div className="flex items-center justify-between mt-4">
-              <span className={`text-sm font-bold uppercase ${sw.status == 1 ? 'text-blue-400' : 'text-slate-500'}`}>
+              <span className={`font-notosans text-sm font-bold uppercase ${sw.status == 1 ? 'text-blue-400' : 'text-slate-500'}`}>
                 {sw.status == 1 ? 'Active' : 'Inactive'}
               </span>
               <label className="relative inline-flex items-center cursor-pointer">

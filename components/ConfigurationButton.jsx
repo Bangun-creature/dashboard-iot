@@ -16,11 +16,11 @@ export default function ConfigurationButton({isOpen, onClose, idButtonConfigurat
             <p className="text-slate-400 text-xs font-semibold ml-1 capital">Website ke ESP32</p>
             <div className="flex flex-col gap-3">
                 <p className="text-slate-100 text-sm">Publisher:</p>
-                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">/unnes/iot/button/{idButtonConfiguration}</p>
+                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">{process.env.NEXT_PUBLIC_PATH_PUBLISHER_WEBSITE}button/{idButtonConfiguration}</p>
             </div>
             <div className="flex flex-col gap-2">
                 <p className="text-slate-100 text-sm">Subscriber:</p>
-                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">/unnes/iot/button/{idButtonConfiguration}</p>
+                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">{process.env.NEXT_PUBLIC_PATH_PUBLISHER_WEBSITE}button/{idButtonConfiguration}</p>
             </div>
             
           </div>
@@ -29,11 +29,11 @@ export default function ConfigurationButton({isOpen, onClose, idButtonConfigurat
             <p className="text-slate-400 text-xs font-semibold ml-1 capital">ESP32 ke Website</p>
             <div className="flex flex-col gap-3">
                 <p className="text-slate-100 text-sm">Publisher:</p>
-                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">/unnes/iot-e/button/{idButtonConfiguration}</p>
+                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">{process.env.NEXT_PUBLIC_PATH_PUBLISHER_HARDWARE}button/{idButtonConfiguration}</p>
             </div>
             <div className="flex flex-col gap-2">
                 <p className="text-slate-100 text-sm">Subscriber:</p>
-                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">/unnes/iot-e/button/{idButtonConfiguration}</p>
+                <p className="text-slate-100 font-medium text-sm bg-slate-900 py-2 px-4 rounded-lg">{process.env.NEXT_PUBLIC_PATH_PUBLISHER_HARDWARE}button/{idButtonConfiguration}</p>
             </div>
           </div>
         </div>

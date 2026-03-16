@@ -158,7 +158,7 @@ export default function Monitoring() {
         </div>
         <button 
           onClick={addGauge}
-          className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-blue-600/20"
+          className="bg-blue-600 font-notosans hover:bg-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-blue-600/20"
         >
           + Add Gauge
         </button>
@@ -174,14 +174,14 @@ export default function Monitoring() {
       {/* Modal Content */}
       <div className="bg-slate-800 border border-slate-700 w-full max-w-md md:max-w-fit p-8 rounded-3xl z-10 shadow-2xl transform transition-all scale-100 animate-in zoom-in duration-200">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-white mb-2 font-robotoflex">Register New Card</h2>
-          <p className="text-slate-400 text-sm">Tap the RFID card to the reader device</p>
+          <h2 className="text-2xl font-medium text-white mb-2 font-robotoflex">Register New Card</h2>
+          <p className="text-slate-400 text-sm font-light font-notosans">Tap the RFID card to the reader device</p>
         </div>
         
         <form onSubmit={handleSubmitButton} className="flex flex-col gap-6">
           {/* Status Scanning Visual */}
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Name Gauge Meter</label>
+            <label className="text-slate-400 text-xs font-medium ml-1 uppercase font-notosans">Name Gauge Meter</label>
             <input 
               autoFocus
               name='name'
@@ -194,7 +194,7 @@ export default function Monitoring() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Unit</label>
+            <label className="text-slate-400 text-xs font-medium ml-1 uppercase font-notosans">Unit</label>
             <input 
               autoFocus
               name='unit'
@@ -208,7 +208,7 @@ export default function Monitoring() {
 
           <div className='grid grid-cols-2 gap-6'>
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Min Value</label>
+            <label className="text-slate-400 text-xs font-medium ml-1 uppercase font-notosans">Min Value</label>
             <input 
               autoFocus
               name='min'
@@ -220,7 +220,7 @@ export default function Monitoring() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Max Value</label>
+            <label className="text-slate-400 text-xs font-medium ml-1 uppercase font-notosans">Max Value</label>
             <input 
               autoFocus
               name='max'
@@ -239,13 +239,13 @@ export default function Monitoring() {
             <button 
               type="button"
               onClick={()=>{setIsOpenModal(false)}}
-              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-bold transition-all"
+              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-semibold transition-all font-notosans"
             >
               Cancel
             </button>
             <button 
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30"
+              className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-semibold font-notosans transition-all shadow-lg shadow-blue-600/30"
             >
               Confirm
             </button>

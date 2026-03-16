@@ -66,7 +66,7 @@ export default function History() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end border-b border-slate-800 pb-6 gap-4">
         <div>
-          <h1 className="text-slate-200 text-5xl font-robotoflex font-semibold tracking-tight">System <span className="text-blue-500">History</span></h1>
+          <h1 className="text-slate-200 text-5xl font-robotoflex font-semibold">System History</h1>
           <p className="text-slate-400 font-notosans font-light text-sm mt-2">Log audit untuk sensor, akses RFID, dan kontrol saklar.</p>
         </div>
 
@@ -86,7 +86,7 @@ export default function History() {
           <div className='flex flex-col gap-5'>
             {listDataMeterGauge.map((item, index)=>(
           <div key={index} className="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl">
-            <h3 className="text-slate-200 font-semibold mb-8 uppercase text-xs tracking-[0.2em]">{item.title}</h3>
+            <h3 className="text-slate-200 font-light mb-8 uppercase text-xs font-notosans">{item.title}</h3>
             <div className="h-[350px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={item.data}>
@@ -114,7 +114,7 @@ export default function History() {
         {activeTab === 'rfid' && listRfid.length > 0 && (
           <div className="bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden shadow-xl">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-900/50 text-slate-500 uppercase text-[10px] font-bold tracking-widest">
+              <thead className="bg-slate-900/50 text-slate-500 uppercase text-[10px] font-light font-notosans">
                 <tr>
                   <th className="px-8 py-5">Timestamp</th>
                   <th className="px-8 py-5">User / UID</th>
@@ -124,9 +124,9 @@ export default function History() {
               <tbody className="divide-y divide-slate-700/50 text-slate-300">
                 {listRfid.map((item, index) => (
                   <tr key={index} className="hover:bg-slate-700/30 transition-all">
-                    <td className="px-8 py-5 font-mono text-xs text-slate-500">{formatTimestamp(item.updated_at)}</td>
+                    <td className="px-8 py-5 font-notosans text-xs text-slate-300">{formatTimestamp(item.updated_at)}</td>
                     <td className="px-8 py-5 font-semibold text-slate-200">{item.username}<span className="block text-[10px] font-mono text-slate-500">{item.rfid_code}</span></td>
-                    <td className="px-8 py-5"><span className={`${item.status == "true" ? "bg-slate-100 text-green-500" : "bg-slate-100 text-red-500"} px-3 py-1 rounded-full text-[10px] font-bold`}>{item.status == "true" ? "GRANTED" : "FALSE"}</span></td>
+                    <td className="px-8 py-5"><span className={`${item.status == "true" ? "bg-slate-100 text-green-700" : "bg-slate-100 text-red-500"} px-3 py-1 rounded-full text-[10px] font-bold`}>{item.status == "true" ? "GRANTED" : "FALSE"}</span></td>
                   </tr>
                 ))}
               </tbody>
@@ -145,10 +145,10 @@ export default function History() {
                   </div>
                   <div>
                     <p className="text-slate-200 font-bold text-sm">{item.name}</p>
-                    <p className="text-slate-500 text-[10px] uppercase">Action: {item.status === 1 ? 'Turned ON' : 'Turned OFF'}</p>
+                    <p className="text-slate-500 text-[10px] uppercase font-notosans">Action: {item.status === 1 ? 'Turned ON' : 'Turned OFF'}</p>
                   </div>
                 </div>
-                <p className="text-slate-600 font-mono text-[10px]">{formatTimestamp(item.updated_at)}</p>
+                <p className="text-slate-300 font-notosans text-[10px]">{formatTimestamp(item.updated_at)}</p>
               </div>
             ))}
           </div>

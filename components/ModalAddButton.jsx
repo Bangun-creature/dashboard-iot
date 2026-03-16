@@ -24,13 +24,13 @@ export default function ModalAddButton({ isOpen, onClose, onSave }) {
       
       <div className="bg-slate-800 border border-slate-700 w-full max-w-md p-8 rounded-3xl z-10 shadow-2xl transform transition-all scale-100 animate-in zoom-in duration-200">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-white mb-2 font-robotoflex">Add New Switch</h2>
-          <p className="text-slate-400 text-sm">Assign a name and GPIO pin for the actuator</p>
+          <h2 className="text-2xl font-medium text-white mb-2 font-robotoflex">Add New Switch</h2>
+          <p className ="text-slate-400 text-sm font-notosans font-light">Assign a name and GPIO pin for the actuator</p>
         </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Device Name</label>
+            <label className="text-slate-400 text-xs font-notosans font-medium ml-1 uppercase">Device Name</label>
             <input 
               autoFocus
               type="text" 
@@ -42,7 +42,7 @@ export default function ModalAddButton({ isOpen, onClose, onSave }) {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">GPIO / Pin Number</label>
+            <label className="text-slate-400 text-xs font-medium ml-1 uppercase font-notosans">GPIO / Pin Number</label>
             <input 
               type="text" 
               value={formData.pin_number}
@@ -53,10 +53,10 @@ export default function ModalAddButton({ isOpen, onClose, onSave }) {
           </div>
 
           <div className="flex gap-3 mt-4">
-            <button type="button" onClick={onClose} className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-bold transition-all">
+            <button type="button" onClick={onClose} className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-semibold transition-all font-notosans">
               Cancel
             </button>
-            <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30">
+            <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30 font-notosans font-semibold">
               Confirm
             </button>
           </div>

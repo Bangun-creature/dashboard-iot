@@ -11,7 +11,7 @@ export default function Settings() {
   return (
     <div className="bg-slate-900 min-h-full pt-20 px-[5%] flex flex-col gap-8 pb-20">
       <div className="py-6 border-b border-slate-800">
-        <h1 className="text-slate-200 text-5xl font-robotoflex font-semibold tracking-tight">
+        <h1 className="text-slate-200 text-5xl font-robotoflex font-semibold">
           System Settings
         </h1>
         <p className="text-slate-400 font-notosans font-light text-sm mt-2">Manage your hardware, security protocols, and alerts.</p>
