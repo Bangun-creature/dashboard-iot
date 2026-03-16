@@ -1,63 +1,93 @@
 'use client';
 
-import React, { useState } from 'react';
+// import { headers } from 'next/headers';
+import React, { useRef, useState } from 'react';
 // import SecurityLogs from './SecurityLogs';
 // import ThresholdAlert from './ThresholdAlert';
 
 export default function Settings() {
-  const [activeTab, setActiveTab] = useState('general');
+  const [form, setForm] = useState({username: 'Bangun Wismoyo Jati', email: 'bangun@gmail.com'});
+  const [preview, setPreview] = useState('/profile/crop-mirror.png');
+  const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleIconClick = ()=> fileInputRef.current.click();
+
+  const handleFileChange = (e)=>{
+    const selectedFile = e.target.files[0];
+    if(selectedFile){
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile)); //Buat preview
+    }
+  }
+
+  const handleSaveProfile = async ()=>{
+    const formData = new FormData();
+    formData.append('username', username);
+
+    formData.append('image', file);
+
+    try {
+      const rawData = await axios.post('/api/auth/update-profile', formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
+      });
+      alert(`Profil berhasil diperbarui: ${rawData.data.message}`);
+
+    } catch (error) {
+      console.error(`Error update profile: ${error}`);
+    }
+  }
 
   return (
-    <div className="bg-slate-900 min-h-full pt-20 px-[5%] flex flex-col gap-8 pb-20">
+    <div className="bg-slate-900 pt-20 px-[5%] flex flex-col gap-8 pb-20">
       <div className="py-6 border-b border-slate-800">
         <h1 className="text-slate-200 text-5xl font-robotoflex font-semibold">
           System Settings
         </h1>
-        <p className="text-slate-400 font-notosans font-light text-sm mt-2">Manage your hardware, security protocols, and alerts.</p>
+        <p className="text-slate-400 font-notosans font-light text-sm mt-2">Manage your profile data.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="">
         {/* Sidebar Navigation */}
-        <div className="lg:col-span-1">
-          <div className="bg-slate-800 p-2 rounded-2xl border border-slate-700 sticky top-24">
-            {['general'].map((tab) => (
+        {/* <div className="lg:col-span-1">
+          <div className="bg-slate-800 p-2 rounded-2xl border border-slate-700 sticky top-24">       
               <button
-                key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`w-full text-left px-6 py-4 rounded-xl font-semibold transition-all mb-1 uppercase text-xs tracking-widest
-                  ${activeTab === tab ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-700'}`}
+                className={`w-full text-left px-6 py-4 rounded-xl font-semibold transition-all mb-1 uppercase text-xs tracking-widest bg-blue-600 text-white shadow-lg shadow-blue-600/20`}
               >
-                {tab.replace('-', ' ')}
+                Profile
               </button>
-            ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Content Area */}
-        <div className="lg:col-span-3">
-          {activeTab === 'general' && (
-            <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h3 className="text-slate-200 font-semibold mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 bg-blue-500 rounded-full"></span> MQTT Broker Configuration
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-4">
+            <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500 lg:col-span-3 flex flex-col">
+              <h3 className="text-slate-200 font-medium mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-500 rounded-full"></span> Edit Your Profile Data
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-slate-500 text-[10px] font-bold uppercase ml-1 tracking-widest">Broker URL</label>
-                  <input type="text" defaultValue="broker.emqx.io" className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:border-blue-500 outline-none transition-all font-mono text-sm" />
+              <div className="flex flex-col gap-2 lg:w-[80%] lg:mx-auto">
+                <div className='w-full flex justify-center'>
+                  <div className='bg-red-500 w-40 h-40 rounded-full relative  bg-cover bg-center bg-no-repeat border-2 border-slate-300' style={{backgroundImage: `url(${preview})`}}>
+                  <input type="file" ref={fileInputRef} onChange={handleFileChange} className='hidden' image="image/*" />
+                  <div className='text-white absolute bottom-0 right-0 bg-[url("/icon/edit.png")] bg-contain bg-no-repeat w-7 h-7 cursor-pointer'></div>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-slate-500 text-[10px] font-bold uppercase ml-1 tracking-widest">Port</label>
-                  <input type="number" defaultValue="1883" className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:border-blue-500 outline-none transition-all font-mono text-sm" />
+                  <label className="text-slate-500 text-xs font-medium ml-1 font-notosans">Username</label>
+                  <input value={form.username} onChange={(e)=> setForm({...form, username: e.target.value})} type="text" defaultValue="Bangun Wismoyo Jati" className="font-notosans bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all text-sm" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-slate-500 text-xs font-medium ml-1 font-notosans">Email</label>
+                  <input value={form.email} onChange={(e)=> setForm({...form, email: e.target.value})} type="text" defaultValue="bangun@gmail.com" className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all font-notosans text-sm" />
                 </div>
               </div>
             </div>
-          )}
-          {activeTab === 'security' && <SecurityLogs />}
 
           {/* Action Footer */}
-          <div className="flex justify-end gap-4 mt-8">
-            <button className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/30 transition-all active:scale-95">
-              Apply Settings
+          <div className="flex justify-end gap-4  lg:col-span-1 h-fit">
+            <button onClick={handleSaveProfile} className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/30 transition-all active:scale-95 text-sm">
+              Save Profile Data
             </button>
           </div>
         </div>

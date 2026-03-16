@@ -50,7 +50,10 @@ export default function Navbar(){
       <div className="lg:hidden bg-blue-600 w-full flex justify-between items-center px-[5%] py-3 text-white shadow-md">
         <p className="font-bold font-robotoflex">IOT Dashboard</p>
         <button onClick={handleClickNavbar}>
-          c</button>
+          
+          <div className="bg-[url(/icon/menu.png)] bg-contain bg-no-repeat w-7 h-7"></div>
+          </button>
+          
       </div>
 
       {/* Background Overlay */}
@@ -73,12 +76,11 @@ export default function Navbar(){
         >
           {/* User Profile Section */}
           <div className="flex gap-3 items-center px-6 py-8 border-b border-slate-600">
-            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20">
-              RI
+            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20 bg-[url('/profile/crop-mirror.png')] bg-cover bg-center bg-no-repeat border-2 border-slate-300">
             </div>
             <div>
-              <p className="font-semibold font-robotoflex text-sm">Romi Indrajaya</p>
-              <p className="text-xs text-slate-400 font-notosans font-light italic">Online</p>
+              <p className="font-semibold font-robotoflex text-sm">Bangun Wismoyo Jati</p>
+              <p className="text-xs text-slate-400 font-notosans font-light">bangun@gmail.com</p>
             </div>
           </div>
 

@@ -166,7 +166,7 @@ export default function AccessControl() {
               <tbody className="divide-y divide-slate-700/50">
                 {listRfid.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-700/30 transition-colors">
-                    <td className="px-4 py-4 font-mono text-xs flex gap-4">
+                    <td className="px-4 py-4 font-mono text-xs flex flex-col gap-1 lg:flex-row lg:gap-4">
                       <p>{formatTimestamp(log.updated_at)}</p>
                       <button onClick={()=>{handleConfigurationOpen(log.id)}} className='text-slate-100 text-xs font-medium font-notosans bg-emerald-600 rounded-lg w-fit px-2 py-1'>Configuration</button>
                     </td>
