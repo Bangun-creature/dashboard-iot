@@ -1,11 +1,14 @@
 'use client'
 import {useRef, useState} from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import axios from "axios";
+
 
 
 export default function Navbar(){
     const pathname = usePathname();
+    const router = useRouter();
 
   const menuNavbar = [
     { link: "/", text: "Beranda" },
@@ -27,14 +30,27 @@ export default function Navbar(){
     }
   };
 
+  // Logout:
+  const handleLogout = async () => {
+    try {
+      // 1. Panggil API untuk hapus cookie session_token
+      await axios.post('/api/auth/logout'); 
+      
+      // 2. Paksa refresh dan pindah ke login
+      router.refresh(); 
+      router.push('/login');
+    } catch (error) {
+      console.error("Gagal Logout:", error);
+    }
+  };
+
     return(
         <div className="fixed lg:relative z-50 lg:z-auto lg:col-span-1 w-full lg:h-full">
       {/* Top Bar Mobile (Tetap) */}
       <div className="lg:hidden bg-blue-600 w-full flex justify-between items-center px-[5%] py-3 text-white shadow-md">
         <p className="font-bold font-robotoflex">IOT Dashboard</p>
         <button onClick={handleClickNavbar}>
-          <div className="bg-[url(/icon/menu.png)] bg-contain bg-no-repeat w-7 h-7"></div>
-        </button>
+          c</button>
       </div>
 
       {/* Background Overlay */}
@@ -83,7 +99,7 @@ export default function Navbar(){
               ))}
               {/* Log Out Button */}
               <li className="w-full">
-                <button className="flex w-full px-6 py-4 text-red-400 hover:bg-red-500/10 transition-colors font-robotoflex text-sm text-left">
+                <button onClick={handleLogout} className="cursor-pointer flex w-full px-6 py-4 text-red-400 hover:bg-red-500/10 transition-colors font-robotoflex text-sm text-left">
                   Log Out
                 </button>
               </li>
