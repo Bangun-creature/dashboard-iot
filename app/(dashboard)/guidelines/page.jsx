@@ -19,7 +19,7 @@ export default function Guide(){
                 {contents.map((item, index)=>(
                     <div key={index} className="flex flex-col gap-3">
                         <h3 className="font-notosans font-medium text-slate-200 text-xl">{index + 1}). {item.title}</h3>
-                        <ul className="flex flex-col gap-2 pl-10">
+                        <ul className="flex flex-col gap-2 pl-4 lg:pl-10">
                             {item.description.map((item, index)=>(
                                 <li key={index} className="font-notosans font-light text-sm text-slate-200 list-decimal">{item}</li>
                             ))}       
