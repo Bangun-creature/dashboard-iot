@@ -18,6 +18,7 @@ export default function Navbar(){
     { link: "/access-control", text: "Access Control" },
     { link: "/settings", text: "Settings" },
     { link: "/history", text: "Log/History" },
+    { link: "/guidelines", text: "Guidelines" }
   ];
 
   const [isOpenNavbar, setIsOpenNavbar] = useState(false);
