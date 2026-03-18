@@ -86,7 +86,7 @@ export default function AccessControl() {
   useEffect(()=>{
     handleLoadListRfid();
 
-    const client = mqtt.connect(`ws://broker.emqx.io:8083/mqtt`);
+    const client = mqtt.connect(`ws://${process.env.NEXT_PUBLIC_PATH_URL_BROKER_MQTT}`);
 
     client.on('connect', ()=> {
       console.log(`MQTT Connected in Acces Control`)

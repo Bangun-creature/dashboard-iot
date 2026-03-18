@@ -16,7 +16,7 @@ export default function DeviceControl() {
 
   // Load MQTT saat halaman pertama dirender:
   useEffect(()=>{
-    const client = mqtt.connect('ws://broker.emqx.io:8083/mqtt');
+    const client = mqtt.connect(`ws://${process.env.NEXT_PUBLIC_PATH_URL_BROKER_MQTT}`);
 
     client.on('connect', ()=>{
       console.log('Connected to MQTT Broker via Websocket');
