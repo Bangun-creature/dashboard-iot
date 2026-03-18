@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import path from "path";
 import db from '@/lib/db';
-import { writeFile } from "fs";
+import { writeFile } from "fs/promises";
 
 export async function POST(request){
     try {
@@ -26,7 +26,7 @@ export async function POST(request){
 
             const storagePath = path.join(process.cwd(), '/public/uploads', filename);
             await writeFile(storagePath, buffer);
-            imagePathForDb = `/uploads/${filename}`;
+            imagePathForDb = `${filename}`;
         }
 
         // query

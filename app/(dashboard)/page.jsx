@@ -111,7 +111,7 @@ export default function Home() {
   {/* Card 2: Security Status (Dari RFID) */}
   <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">RFID Card</p>
-    <h2 className="text-3xl font-semibold text-white mt-2 font-robotoflex">{totalRfid} <span className="text-sm text-slate-400">Total Card</span></h2>
+    <h2 className="text-3xl font-semibold text-white mt-2 font-robotoflex">{totalRfid} <span className="text-sm text-slate-400">Total RFID Card</span></h2>
     <div className="mt-2 text-xs text-white/70">
       <ul>
         <li className="font-notosans">Total Granted: {totalGranted}</li>

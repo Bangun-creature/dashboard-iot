@@ -64,7 +64,7 @@ export default function Navbar(){
         })
 
         if(userData.image){
-          setPreview(`/profile/${userData.image}`);
+          setPreview(`/uploads/${userData.image}`);
         }
 
       } catch (error) {

@@ -28,7 +28,7 @@ export default function Settings() {
         })
 
         if(userData.image){
-          setPreview(`/profile/${userData.image}`);
+          setPreview(`/uploads/${userData.image}`);
         }
 
       } catch (error) {

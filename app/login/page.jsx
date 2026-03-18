@@ -27,7 +27,7 @@ export default function LoginPage(){
 
     return(
         <div className="grid px-[5%]">
-            <div className="mx-auto w-full mt-20 bg-slate-900 rounded-lg p-4 flex flex-col gap-8 md:w-sm">
+            <div className="mx-auto w-full mt-20 bg-slate-900 rounded-lg p-5 flex flex-col gap-8 md:w-sm border border-white/30">
                 <div className="flex flex-col gap-2">
                 <h1 className="text-5xl text-slate-100 font-medium font-robotoflex">Welcome Back to Iot Dahsboard Website</h1>
                 <p className="text-xs text-slate-300 font-light font-notosans">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, minima.</p>
