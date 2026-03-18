@@ -1,15 +1,43 @@
 'use client';
 
 // import { headers } from 'next/headers';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+
 // import SecurityLogs from './SecurityLogs';
 // import ThresholdAlert from './ThresholdAlert';
 
 export default function Settings() {
-  const [form, setForm] = useState({username: 'Bangun Wismoyo Jati', email: 'bangun@gmail.com'});
+  const [form, setForm] = useState({id: '', username: '', email: ''});
   const [preview, setPreview] = useState('/profile/crop-mirror.png');
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(()=>{
+    const fetchUserData = async ()=>{
+      try {
+        const rawData = await axios.get(`/api/auth/profile`);
+
+        console.log(`Data user profile: ${JSON.stringify(rawData.data)}`);
+        const userData = rawData.data.user;
+
+        setForm({
+          id: userData.id,
+          username: userData.username || "",
+          email: userData.email || ""
+        })
+
+        if(userData.image){
+          setPreview(`/profile${JSON.parse(userData.image)}`);
+        }
+
+      } catch (error) {
+        console.log(`There is an error when try to get user profile data: ${error}`);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
   const handleIconClick = ()=> fileInputRef.current.click();
 
@@ -23,9 +51,13 @@ export default function Settings() {
 
   const handleSaveProfile = async ()=>{
     const formData = new FormData();
-    formData.append('username', username);
+    formData.append('id', form.id);
+    formData.append('username', form.username);
+    formData.append('email', form.email);
 
-    formData.append('image', file);
+    if(file){
+      formData.append('image', file);
+    }
 
     try {
       const rawData = await axios.post('/api/auth/update-profile', formData, {
@@ -69,17 +101,17 @@ export default function Settings() {
               <div className="flex flex-col gap-2 lg:w-[80%] lg:mx-auto">
                 <div className='w-full flex justify-center'>
                   <div className='bg-red-500 w-40 h-40 rounded-full relative  bg-cover bg-center bg-no-repeat border-2 border-slate-300' style={{backgroundImage: `url(${preview})`}}>
-                  <input type="file" ref={fileInputRef} onChange={handleFileChange} className='hidden' image="image/*" />
-                  <div className='text-white absolute bottom-0 right-0 bg-[url("/icon/edit.png")] bg-contain bg-no-repeat w-7 h-7 cursor-pointer'></div>
+                  <input type="file" ref={fileInputRef} onChange={handleFileChange} className='hidden' accept="image/*" />
+                  <div className='text-white absolute bottom-0 right-0 bg-[url("/icon/edit.png")] bg-contain bg-no-repeat w-7 h-7 cursor-pointer' onClick={handleIconClick}></div>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-slate-500 text-xs font-medium ml-1 font-notosans">Username</label>
-                  <input value={form.username} onChange={(e)=> setForm({...form, username: e.target.value})} type="text" defaultValue="Bangun Wismoyo Jati" className="font-notosans bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all text-sm" />
+                  <input value={form.username} onChange={(e)=> setForm({...form, username: e.target.value})} type="text" className="font-notosans bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all text-sm" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-slate-500 text-xs font-medium ml-1 font-notosans">Email</label>
-                  <input value={form.email} onChange={(e)=> setForm({...form, email: e.target.value})} type="text" defaultValue="bangun@gmail.com" className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all font-notosans text-sm" />
+                  <input value={form.email} onChange={(e)=> setForm({...form, email: e.target.value})} type="text"  className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:border-blue-500 outline-none transition-all font-notosans text-sm" />
                 </div>
               </div>
             </div>

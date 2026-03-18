@@ -3,6 +3,7 @@ import {useRef, useState} from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
+import { useEffect } from "react";
 
 
 
@@ -21,6 +22,9 @@ export default function Navbar(){
 
   const [isOpenNavbar, setIsOpenNavbar] = useState(false);
   const backgroundNavbar = useRef(null);
+
+  const [form, setForm] = useState({id: '', username: '', email: ''});
+  const [preview, setPreview] = useState('/profile/crop-mirror.png');
 
   const handleClickNavbar = () => setIsOpenNavbar(true);
 
@@ -43,6 +47,32 @@ export default function Navbar(){
       console.error("Gagal Logout:", error);
     }
   };
+
+  useEffect(()=>{
+    const fetchUserData = async ()=>{
+      try {
+        const rawData = await axios.get(`/api/auth/profile`);
+
+        console.log(`Data user profile: ${JSON.stringify(rawData.data)}`);
+        const userData = rawData.data.user;
+
+        setForm({
+          id: userData.id,
+          username: userData.username || "",
+          email: userData.email || ""
+        })
+
+        if(userData.image){
+          setPreview(`/profile${JSON.parse(userData.image)}`);
+        }
+
+      } catch (error) {
+        console.log(`There is an error when try to get user profile data: ${error}`);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
     return(
         <div className="fixed lg:relative z-50 lg:z-auto lg:col-span-1 w-full lg:h-full">
@@ -76,11 +106,11 @@ export default function Navbar(){
         >
           {/* User Profile Section */}
           <div className="flex gap-3 items-center px-6 py-8 border-b border-slate-600">
-            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20 bg-[url('/profile/crop-mirror.png')] bg-cover bg-center bg-no-repeat border-2 border-slate-300">
+            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20 bg-cover bg-center bg-no-repeat border-2 border-slate-300" style={{backgroundImage: `url("${preview}")`}}>
             </div>
             <div>
-              <p className="font-semibold font-robotoflex text-sm">Bangun Wismoyo Jati</p>
-              <p className="text-xs text-slate-400 font-notosans font-light">bangun@gmail.com</p>
+              <p className="font-semibold font-robotoflex text-sm">{form.username}</p>
+              <p className="text-xs text-slate-400 font-notosans font-light">{form.email}</p>
             </div>
           </div>
 
