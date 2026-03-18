@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export default function Settings() {
   const [form, setForm] = useState({id: '', username: '', email: ''});
-  const [preview, setPreview] = useState('/profile/crop-mirror.png');
+  const [preview, setPreview] = useState('');
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -28,7 +28,7 @@ export default function Settings() {
         })
 
         if(userData.image){
-          setPreview(`/profile${JSON.parse(userData.image)}`);
+          setPreview(`/profile/${userData.image}`);
         }
 
       } catch (error) {
@@ -64,6 +64,7 @@ export default function Settings() {
         headers: {'Content-Type': 'multipart/form-data'}
       });
       alert(`Profil berhasil diperbarui: ${rawData.data.message}`);
+      window.location.reload();
 
     } catch (error) {
       console.error(`Error update profile: ${error}`);
@@ -100,7 +101,7 @@ export default function Settings() {
               </h3>
               <div className="flex flex-col gap-2 lg:w-[80%] lg:mx-auto">
                 <div className='w-full flex justify-center'>
-                  <div className='bg-red-500 w-40 h-40 rounded-full relative  bg-cover bg-center bg-no-repeat border-2 border-slate-300' style={{backgroundImage: `url(${preview})`}}>
+                  <div className='bg-slate-500 w-40 h-40 rounded-full relative  bg-cover bg-center bg-no-repeat border-2 border-slate-300' style={{backgroundImage: `url(${preview})`}}>
                   <input type="file" ref={fileInputRef} onChange={handleFileChange} className='hidden' accept="image/*" />
                   <div className='text-white absolute bottom-0 right-0 bg-[url("/icon/edit.png")] bg-contain bg-no-repeat w-7 h-7 cursor-pointer' onClick={handleIconClick}></div>
                   </div>
@@ -118,7 +119,7 @@ export default function Settings() {
 
           {/* Action Footer */}
           <div className="flex justify-end gap-4  lg:col-span-1 h-fit">
-            <button onClick={handleSaveProfile} className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/30 transition-all active:scale-95 text-sm">
+            <button onClick={handleSaveProfile} className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/30 transition-all active:scale-95 text-sm cursor-pointer">
               Save Profile Data
             </button>
           </div>

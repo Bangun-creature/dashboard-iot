@@ -24,7 +24,8 @@ export default function Navbar(){
   const backgroundNavbar = useRef(null);
 
   const [form, setForm] = useState({id: '', username: '', email: ''});
-  const [preview, setPreview] = useState('/profile/crop-mirror.png');
+  const [preview, setPreview] = useState('');
+  const route = useRouter();
 
   const handleClickNavbar = () => setIsOpenNavbar(true);
 
@@ -63,7 +64,7 @@ export default function Navbar(){
         })
 
         if(userData.image){
-          setPreview(`/profile${JSON.parse(userData.image)}`);
+          setPreview(`/profile/${userData.image}`);
         }
 
       } catch (error) {
@@ -73,6 +74,10 @@ export default function Navbar(){
 
     fetchUserData();
   }, []);
+
+  function handleGoToProfile(){
+    route.push("/settings")
+  }
 
     return(
         <div className="fixed lg:relative z-50 lg:z-auto lg:col-span-1 w-full lg:h-full">
@@ -105,8 +110,8 @@ export default function Navbar(){
           `}
         >
           {/* User Profile Section */}
-          <div className="flex gap-3 items-center px-6 py-8 border-b border-slate-600">
-            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20 bg-cover bg-center bg-no-repeat border-2 border-slate-300" style={{backgroundImage: `url("${preview}")`}}>
+          <div className="flex gap-3 items-center px-6 py-8 border-b border-slate-600 cursor-pointer" onClick={handleGoToProfile}>
+            <div className="bg-slate-500 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-inner shadow-black/20 bg-cover bg-center bg-no-repeat border-2 border-slate-300" style={{backgroundImage: `url("${preview}")`}}>
             </div>
             <div>
               <p className="font-semibold font-robotoflex text-sm">{form.username}</p>

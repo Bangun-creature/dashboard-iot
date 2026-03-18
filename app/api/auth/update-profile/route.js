@@ -9,6 +9,7 @@ export async function POST(request){
 
         const username = formData.get('username');
         const email = formData.get('email');
+        const id = formData.get('id');
 
         const file = formData.get('image');
 
@@ -45,6 +46,7 @@ export async function POST(request){
         return NextResponse.json({
             message: `Profile updated successfully`
         }, {status: 200});
+        
     } catch (error) {
         console.error(`API Error: ${error}`);
         return NextResponse.json({
