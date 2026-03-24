@@ -17,6 +17,6 @@ export function middleware(request){
 
 export const config = {
     matcher: [
-        '/'
+        '/', '/monitoring', '/access-control', '/settings', '/history', '/guidelines'
     ]
 }
