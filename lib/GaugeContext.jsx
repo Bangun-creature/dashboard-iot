@@ -3,6 +3,7 @@ import { useContext,  createContext, useState } from "react";
 
 const GaugeContext = createContext();
 
+// Gauge Context
 export function GaugeProvider({children}){
     const [gauges, setGauges] = useState([]);
 
