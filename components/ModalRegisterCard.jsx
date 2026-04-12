@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 export default function ModalRegisterCard({ isOpen, onClose, onSave }) {
   const [newCardName, setNewCardName] = useState("");
-  const [detectedUid, setDetectedUid] = useState("2900940E95"); // Nanti diupdate via Socket.io
+  const [rfidCode, setRfidCode] = useState(""); // Nanti diupdate via Socket.io
 
   if (!isOpen) return null;
 
@@ -12,10 +12,13 @@ export default function ModalRegisterCard({ isOpen, onClose, onSave }) {
     if (!newCardName) return alert("Nama tidak boleh kosong!");
     
     // Kirim data ke parent (AccessControl)
-    onSave({ username: newCardName, rfid_code: detectedUid, status: "false"});
+    onSave({ username: newCardName, rfid_code: rfidCode, status: "false"});
     
     // Reset form
     setNewCardName("");
+    const data = {name: newCardName, code: rfidCode}
+    console.log(`Data RFID before submit: ${JSON.stringify(data)}`);
+
     onClose();
   };
 
@@ -31,23 +34,25 @@ export default function ModalRegisterCard({ isOpen, onClose, onSave }) {
       <div className="bg-slate-800 border border-slate-700 w-full max-w-md p-8 rounded-3xl z-10 shadow-2xl transform transition-all scale-100 animate-in zoom-in duration-200">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-medium text-white mb-2 font-robotoflex">Register New Card</h2>
-          <p className="text-slate-400 text-sm font-light font-notosans">Tap the RFID card to the reader device</p>
+          <p className="text-slate-400 text-sm font-light font-notosans">Enter your RFID Code Bellow</p>
         </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          {/* Status Scanning Visual */}
-          <div className="bg-slate-900 p-6 rounded-2xl border border-dashed border-blue-500/40 flex flex-col items-center justify-center gap-2">
-            <div className={`w-3 h-3 rounded-full bg-blue-500 animate-ping mb-2 ${detectedUid !== "Scanning..." && 'animate-none bg-green-500'}`}></div>
-            <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em]">UID Hardware Detected</p>
-            <p className={`text-xl font-mono tracking-widest ${detectedUid === "Scanning..." ? 'text-slate-600' : 'text-blue-400'}`}>
-              {detectedUid}
-            </p>
+          <div className="flex flex-col gap-2">
+            <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Rfid Code</label>
+            <input 
+              autoFocus
+              type="text" 
+              value={rfidCode}
+              onChange={(e) => setRfidCode(e.target.value)}
+              placeholder="2343940E91" 
+              className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-700"
+            />
           </div>
 
           <div className="flex flex-col gap-2">
             <label className="text-slate-400 text-xs font-semibold ml-1 uppercase">Owner Name</label>
             <input 
-              autoFocus
               type="text" 
               value={newCardName}
               onChange={(e) => setNewCardName(e.target.value)}
@@ -60,13 +65,13 @@ export default function ModalRegisterCard({ isOpen, onClose, onSave }) {
             <button 
               type="button"
               onClick={onClose}
-              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-semibold font-notosans transition-all"
+              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 py-4 rounded-2xl font-semibold font-notosans transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button 
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-semibolf font-notosans transition-all shadow-lg shadow-blue-600/30"
+              className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-semibolf font-notosans transition-all shadow-lg shadow-blue-600/30 cursor-pointer"
             >
               Confirm
             </button>

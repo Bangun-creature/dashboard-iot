@@ -8,21 +8,6 @@ import mqtt from 'mqtt';
 import formatTimestamp from '@/lib/formatTime';
 
 export default function AccessControl() {
-  // Data user terakhir yang melakukan TAP (Real-time Simulation)
-  const [lastTap, setLastTap] = useState({
-    id: "88:AA:BB:CC",
-    user: "Bangun W.J.",
-    status: "Granted",
-    time: "10:45:12 AM"
-  });
-
-  // Daftar Log Akses
-  const [logs, setLogs] = useState([
-    { id: 1, uid: "88:AA:BB:CC", user: "Bangun W.J.", time: "10:45:12 AM", status: "Granted" },
-    { id: 2, uid: "12:34:56:78", user: "Unknown", time: "10:30:05 AM", status: "Denied" },
-    { id: 3, uid: "99:FF:EE:DD", user: "Romi Indrajaya", time: "09:15:20 AM", status: "Granted" },
-  ]);
-
   const [listRfid, setListRfid] = useState([]);
 
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -65,9 +50,13 @@ export default function AccessControl() {
     console.log(`Data new user rfid : ${JSON.stringify(data)}`);
 
     try {
+      // Di dalam data harus berbentuk object
       const rawData = await axios.post(`http://localhost:3000/api/rfid/save`, data);
 
       console.log(`Response add rfid : ${JSON.stringify(rawData.data)}`);
+      if(rawData.data.status === 200){
+        handleLoadListRfid();
+      }
     } catch (error) {
       console.log(`There is an error when add new rfid: ${error}`);
     }
@@ -93,7 +82,16 @@ export default function AccessControl() {
       client.subscribe(`/unnes/iot-e/rfid`)
     })
 
-    client.on('message', (topic, message)=>{
+    client.on('message', async(topic, message)=>{
+      const rfid_code = message.toString();
+
+      try {
+        const rawData = await axios.post('/api/rfid/toggle', {rfid_code});
+        console.log(`Status toggle data: ${JSON.stringify(rawData.data)}`)
+      } catch (error) {
+        console.log(`Gagal mengubah status RFID`, error);
+      }
+      // Refresh list setelah toggle:
       handleLoadListRfid();
     })
 
@@ -101,6 +99,18 @@ export default function AccessControl() {
       if(client) client.end();
     }
   }, [])
+
+  const handleDeleteRfidCard = async(id_rfidCard)=>{
+    console.log(`Do you want to delete rfid Card with id: ${id_rfidCard}`);
+    try {
+      // Di dalam data -> harus object
+      const rawData = await axios.delete(`http://localhost:3000/api/rfid/delete`, {data: {idRfidConfiguration: id_rfidCard}});
+
+      console.log(`Status delete rfidCard: ${JSON.stringify(rawData.data)}`);
+    } catch (error) {
+      console.log(`There is an error when detele rfidCard: ${error}`);
+    }
+  }
 
   return (
     <div className="bg-slate-900 min-h-full pt-20 px-[5%] flex flex-col gap-8">
@@ -137,7 +147,7 @@ export default function AccessControl() {
           {/* <button className="bg-slate-800 hover:bg-slate-700 text-blue-400 border border-slate-700 py-4 rounded-2xl font-bold transition-all" onClick={() => setIsModalOpen(true)}>
             + Register New Card
           </button> */}
-          <button className="bg-slate-800 hover:bg-slate-700 text-blue-400 border border-slate-700 py-4 rounded-2xl font-bold transition-all" onClick={()=>{setIsModalOpen(true)}}>
+          <button className="bg-slate-800 hover:bg-slate-700 text-blue-400 border border-slate-700 py-4 rounded-2xl font-bold transition-all cursor-pointer" onClick={()=>{setIsModalOpen(true)}}>
             + Register New Card
           </button>
           <ModalRegisterCard 
@@ -161,6 +171,7 @@ export default function AccessControl() {
                   <th className="px-6 py-4">Time</th>
                   <th className="px-6 py-4">User / UID</th>
                   <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4">Delete</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700/50">
@@ -179,6 +190,11 @@ export default function AccessControl() {
                         ${log.status === 'true' ? 'bg-slate-100 text-blue-600' : 'bg-slate-100 text-red-500'}`}>
                         {log.status}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <a className={`text-[10px] font-bold text-slate-100 cursor-pointer bg-red-500`} onClick={()=> {handleDeleteRfidCard(log.id)}}>
+                        Hps
+                      </a>
                     </td>
                   </tr>
                 ))}

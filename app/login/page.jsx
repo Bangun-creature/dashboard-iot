@@ -16,7 +16,7 @@ export default function LoginPage(){
             const rawData = await axios.post('/api/auth/login', form);
             if(rawData.status == 200){
                 router.push('/');
-                router.refresh();
+                // router.refresh();
             }
         } catch (error) {
             alert(error.response?.data?.message || "Login Gagal");
