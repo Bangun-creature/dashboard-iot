@@ -12,13 +12,13 @@ export default function Navbar(){
     const router = useRouter();
 
   const menuNavbar = [
-    { link: "/", text: "Beranda" },
-    { link: "/device-control", text: "Device Control" },
-    { link: "/monitoring", text: "Monitoring" },
-    { link: "/access-control", text: "Access Control" },
-    { link: "/settings", text: "Settings" },
-    { link: "/history", text: "Log/History" },
-    { link: "/guidelines", text: "Guidelines" }
+    { link: "/", text: "Beranda", pathImage: "/beranda.png" },
+    { link: "/device-control", text: "Device Control", pathImage: "/device-control.png" },
+    { link: "/monitoring", text: "Monitoring", pathImage: "/monitoring.png" },
+    { link: "/access-control", text: "Access Control", pathImage: "/access-control.png" },
+    { link: "/settings", text: "Settings", pathImage: "/settings.png" },
+    { link: "/history", text: "Log/History", pathImage: "/history.png" },
+    { link: "/guidelines", text: "Guidelines", pathImage: "/guidelines.png" }
   ];
 
   const [isOpenNavbar, setIsOpenNavbar] = useState(false);
@@ -128,10 +128,11 @@ export default function Navbar(){
                   <Link
                     href={item.link}
                     onClick={() => setIsOpenNavbar(false)} // Tutup menu saat diklik (mode mobile)
-                    className={`flex px-6 py-4 border-b border-slate-600/50 transition-all font-notosans text-xs 
+                    className={`flex px-6 py-4 border-b border-slate-600/50 transition-all font-notosans gap-3 text-xs 
                     ${pathname === item.link ? "bg-slate-800 text-blue-400 border-l-4 border-l-blue-500" : "text-slate-200 hover:bg-slate-600 hover:pl-8"}`}
                   >
-                    {item.text}
+                    <div className="bg-contain bg-no-repeat bg-center w-5 h-5" style={{backgroundImage: `url('/icon${item.pathImage}')`}}></div>
+                    <p>{item.text}</p>
                   </Link>
                 </li>
               ))}

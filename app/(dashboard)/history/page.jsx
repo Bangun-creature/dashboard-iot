@@ -41,9 +41,9 @@ export default function History() {
     }
   }
 
-  useEffect(()=>{
-    handleLoadListRfid();
-  },[])
+  // useEffect(()=>{
+    
+  // },[])
 
   // BUTTON
   const loadedDataButton = async()=>{
@@ -62,6 +62,8 @@ export default function History() {
 
  useEffect(()=>{
 
+  handleLoadListRfid();
+  
     const client = mqtt.connect(`ws://${process.env.NEXT_PUBLIC_PATH_URL_BROKER_MQTT}`);
 
     client.on('connect', ()=> {
