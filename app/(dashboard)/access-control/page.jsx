@@ -54,7 +54,7 @@ export default function AccessControl() {
       const rawData = await axios.post(`http://localhost:3000/api/rfid/save`, data);
 
       console.log(`Response add rfid : ${JSON.stringify(rawData.data)}`);
-      if(rawData.data.status === 200){
+      if(rawData.data.statusCode === 200){
         handleLoadListRfid();
       }
     } catch (error) {
@@ -104,11 +104,24 @@ export default function AccessControl() {
     console.log(`Do you want to delete rfid Card with id: ${id_rfidCard}`);
     try {
       // Di dalam data -> harus object
-      const rawData = await axios.delete(`http://localhost:3000/api/rfid/delete`, {data: {idRfidConfiguration: id_rfidCard}});
+      const rawData = await axios.delete(`http://localhost:3000/api/rfid/delete`, {data: {id_rfidCard: id_rfidCard}});
 
       console.log(`Status delete rfidCard: ${JSON.stringify(rawData.data)}`);
+      if(rawData.data.statusCode === 200){
+        handleLoadListRfid();
+      }
+
     } catch (error) {
       console.log(`There is an error when detele rfidCard: ${error}`);
+    }
+  }
+
+  const handleDeleteAllRfidCard = async()=>{
+    try {
+      const rawData = await axios.delete(`http://localhost:3000/api/rfid/deleteAll`);
+      console.log(`Response Delete All: ${JSON.stringify(rawData.data)}`);
+    } catch (error) {
+      console.log(`There is an error when delete all rfid card: ${error}`);
     }
   }
 
@@ -160,8 +173,8 @@ export default function AccessControl() {
         {/* Access Logs Table */}
         <div className="lg:col-span-2 bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden shadow-xl">
           <div className="px-6 py-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
-            <h3 className="text-slate-200 font-semibold tracking-wide uppercase text-xs">Recent Activity Logs</h3>
-            <button className="text-xs text-blue-400 hover:underline">Clear Logs</button>
+            <h3 className="text-slate-200 font-semibold tracking-wide uppercase text-xs">List RFID Card</h3>
+            <button className="text-xs text-blue-400 hover:underline" onClick={()=>{handleDeleteAllRfidCard()}}>Delete All RFID</button>
           </div>
           
           <div className="overflow-x-auto">

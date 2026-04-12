@@ -1,9 +1,10 @@
 'use client';
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import formatTimestamp from '@/lib/formatTime';
+import mqtt from 'mqtt';
 
 export default function History() {
   const [activeTab, setActiveTab] = useState('sensor'); // 'sensor', 'rfid', atau 'button'
@@ -58,6 +59,33 @@ export default function History() {
   useEffect(()=>{
     loadedDataButton();
   },[])
+
+ useEffect(()=>{
+
+    const client = mqtt.connect(`ws://${process.env.NEXT_PUBLIC_PATH_URL_BROKER_MQTT}`);
+
+    client.on('connect', ()=> {
+      console.log(`MQTT Connected in Acces Control`)
+      client.subscribe(`/unnes/iot-e/rfid`)
+    })
+
+    client.on('message', async(topic, message)=>{
+      const rfid_code = message.toString();
+
+      try {
+        const rawData = await axios.post('/api/rfid/toggle', {rfid_code});
+        console.log(`Status toggle data: ${JSON.stringify(rawData.data)}`)
+      } catch (error) {
+        console.log(`Gagal mengubah status RFID`, error);
+      }
+      // Refresh list setelah toggle:
+      handleLoadListRfid();
+    })
+
+    return ()=>{
+      if(client) client.end();
+    }
+  }, [])
 
 
 
